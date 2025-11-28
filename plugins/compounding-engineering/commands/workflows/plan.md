@@ -8,11 +8,17 @@ argument-hint: "[feature description, bug report, or improvement idea]"
 
 ## Introduction
 
+**Note: The current year is 2025.** Use this when dating plans and searching for recent documentation.
+
 Transform feature descriptions, bug reports, or improvement ideas into well-structured markdown files issues that follow project conventions and best practices. This command provides flexible detail levels to match your needs.
 
 ## Feature Description
 
 <feature_description> #$ARGUMENTS </feature_description>
+
+**If the feature description above is empty, ask the user:** "What would you like to plan? Please describe the feature, bug fix, or improvement you have in mind."
+
+Do not proceed until you have a clear feature description from the user.
 
 ## Main Tasks
 
@@ -361,19 +367,58 @@ end
 
 ## Output Format
 
-write to plans/<issue_title>.md
+Write the plan to `plans/<issue_title>.md`
 
-Now call the /plan_review command with the plan file as the argument. Make sure to include the plan file in the command.
+## Post-Generation Options
 
-## Thinking Approaches
+After writing the plan file, use the **AskUserQuestion tool** to present these options:
 
-- **Analytical:** Break down complex features into manageable components
-- **User-Centric:** Consider end-user impact and experience
-- **Technical:** Evaluate implementation complexity and architecture fit
-- **Strategic:** Align with project goals and roadmap
+**Question:** "Plan ready at `plans/<issue_title>.md`. What would you like to do next?"
 
-After you get the review back, ask the user questions about the current state of the plan and what the reviewers came back with. Make sure to underatand if this plan is too big or thinks are missing. Are there any other considerations that should be included? Keep askign questions until the user is happy with the plan. THEN update the plan file with the user's feedback.
+**Options:**
+1. **Start `/work`** - Begin implementing this plan
+2. **Run `/plan_review`** - Get feedback from reviewers (DHH, Kieran, Simplicity)
+3. **Create Issue** - Create issue in project tracker (GitHub/Linear)
+4. **Simplify** - Reduce detail level
+5. **Rework** - Change approach or request specific changes
 
-Optional you can ask to create a Github issue from the plan file.
+Based on selection:
+- **`/work`** → Call the /work command with the plan file path
+- **`/plan_review`** → Call the /plan_review command with the plan file path
+- **Create Issue** → See "Issue Creation" section below
+- **Simplify** → Ask "What should I simplify?" then regenerate simpler version
+- **Rework** → Ask "What would you like changed?" then regenerate with changes
+- **Other** (automatically provided) → Accept free text, act on it
+
+Loop back to options after Simplify/Rework until user selects `/work` or `/plan_review`.
+
+## Issue Creation
+
+When user selects "Create Issue", detect their project tracker from CLAUDE.md:
+
+1. **Check for tracker preference** in user's CLAUDE.md (global or project):
+   - Look for `project_tracker: github` or `project_tracker: linear`
+   - Or look for mentions of "GitHub Issues" or "Linear" in their workflow section
+
+2. **If GitHub:**
+   ```bash
+   # Extract title from plan filename (kebab-case to Title Case)
+   # Read plan content for body
+   gh issue create --title "feat: [Plan Title]" --body-file plans/<issue_title>.md
+   ```
+
+3. **If Linear:**
+   ```bash
+   # Use linear CLI if available, or provide instructions
+   # linear issue create --title "[Plan Title]" --description "$(cat plans/<issue_title>.md)"
+   ```
+
+4. **If no tracker configured:**
+   Ask user: "Which project tracker do you use? (GitHub/Linear/Other)"
+   - Suggest adding `project_tracker: github` or `project_tracker: linear` to their CLAUDE.md
+
+5. **After creation:**
+   - Display the issue URL
+   - Ask if they want to proceed to `/work` or `/plan_review`
 
 NEVER CODE! Just research and write the plan.

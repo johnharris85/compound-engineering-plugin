@@ -1,5 +1,5 @@
 ---
-name: codify-docs
+name: compound-docs
 description: Capture solved problems as categorized documentation with YAML frontmatter for fast lookup
 allowed-tools:
   - Read # Parse conversation context
@@ -11,7 +11,7 @@ preconditions:
   - Solution has been verified working
 ---
 
-# codify-docs Skill
+# compound-docs Skill
 
 **Purpose:** Automatically document solved problems to build searchable institutional knowledge with category-based organization (enum-validated problem types).
 
@@ -348,7 +348,7 @@ Action:
 ## Integration Points
 
 **Invoked by:**
-- /codify command (primary interface)
+- /compound command (primary interface)
 - Manual invocation in conversation after solution confirmed
 - Can be triggered by detecting confirmation phrases like "that worked", "it's fixed", etc.
 

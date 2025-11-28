@@ -8,13 +8,19 @@ This repository is a Claude Code plugin marketplace that distributes the `compou
 every-marketplace/
 ├── .claude-plugin/
 │   └── marketplace.json          # Marketplace catalog (lists available plugins)
+├── docs/                         # Documentation site (GitHub Pages)
+│   ├── index.html                # Landing page
+│   ├── css/                      # Stylesheets
+│   ├── js/                       # JavaScript
+│   └── pages/                    # Reference pages
 └── plugins/
     └── compounding-engineering/   # The actual plugin
         ├── .claude-plugin/
         │   └── plugin.json        # Plugin metadata
-        ├── agents/                # 17 specialized AI agents
-        ├── commands/              # 6 slash commands
-        ├── skills/                # 1 skill (gemini-imagegen)
+        ├── agents/                # 24 specialized AI agents
+        ├── commands/              # 13 slash commands
+        ├── skills/                # 11 skills
+        ├── mcp-servers/           # 2 MCP servers (playwright, context7)
         ├── README.md              # Plugin documentation
         └── CHANGELOG.md           # Version history
 ```
@@ -86,7 +92,21 @@ When adding new functionality, bump the version in:
 - [ ] `plugins/compounding-engineering/CHANGELOG.md` → document changes
 - [ ] `CLAUDE.md` → update structure diagram if needed
 
-#### 5. Validate JSON files
+#### 5. Rebuild documentation site
+
+Run the release-docs command to update all documentation pages:
+
+```bash
+claude /release-docs
+```
+
+This will:
+- Update stats on the landing page
+- Regenerate reference pages (agents, commands, skills, MCP servers)
+- Update the changelog page
+- Validate all counts match actual files
+
+#### 6. Validate JSON files
 
 ```bash
 cat .claude-plugin/marketplace.json | jq .
@@ -165,6 +185,73 @@ Each plugin has its own plugin.json with detailed metadata:
     "category": ["command1", "command2"]
   }
 }
+```
+
+## Documentation Site
+
+The documentation site is at `/docs` in the repository root (for GitHub Pages). This site is built with plain HTML/CSS/JS (based on Evil Martians' LaunchKit template) and requires no build step to view.
+
+### Documentation Structure
+
+```
+docs/
+├── index.html           # Landing page with stats and philosophy
+├── css/
+│   ├── style.css        # Main styles (LaunchKit-based)
+│   └── docs.css         # Documentation-specific styles
+├── js/
+│   └── main.js          # Interactivity (theme toggle, mobile nav)
+└── pages/
+    ├── getting-started.html  # Installation and quick start
+    ├── agents.html           # All 24 agents reference
+    ├── commands.html         # All 13 commands reference
+    ├── skills.html           # All 11 skills reference
+    ├── mcp-servers.html      # MCP servers reference
+    └── changelog.html        # Version history
+```
+
+### Keeping Docs Up-to-Date
+
+**IMPORTANT:** After ANY change to agents, commands, skills, or MCP servers, run:
+
+```bash
+claude /release-docs
+```
+
+This command:
+1. Counts all current components
+2. Reads all agent/command/skill/MCP files
+3. Regenerates all reference pages
+4. Updates stats on the landing page
+5. Updates the changelog from CHANGELOG.md
+6. Validates counts match across all files
+
+### Manual Updates
+
+If you need to update docs manually:
+
+1. **Landing page stats** - Update the numbers in `docs/index.html`:
+   ```html
+   <span class="stat-number">24</span>  <!-- agents -->
+   <span class="stat-number">13</span>  <!-- commands -->
+   ```
+
+2. **Reference pages** - Each page in `docs/pages/` documents all components in that category
+
+3. **Changelog** - `docs/pages/changelog.html` mirrors `CHANGELOG.md` in HTML format
+
+### Viewing Docs Locally
+
+Since the docs are static HTML, you can view them directly:
+
+```bash
+# Open in browser
+open docs/index.html
+
+# Or start a local server
+cd docs
+python -m http.server 8000
+# Then visit http://localhost:8000
 ```
 
 ## Testing Changes

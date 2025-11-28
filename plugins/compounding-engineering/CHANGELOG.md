@@ -5,6 +5,48 @@ All notable changes to the compounding-engineering plugin will be documented in 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.1] - 2025-11-27
+
+### Added
+
+- **`/plan` command** - Added "Create Issue" option to post-generation menu. Detects project tracker (GitHub or Linear) from user's CLAUDE.md (`project_tracker: github` or `project_tracker: linear`) and creates issues using `gh issue create` or Linear CLI.
+
+## [2.8.0] - 2025-11-27
+
+### Added
+
+- **`julik-frontend-races-reviewer` agent** - New review agent specializing in JavaScript and Stimulus code race conditions. Reviews frontend code with Julik's eye for timing issues, DOM event handling, promise management, setTimeout/setInterval cleanup, CSS animations, and concurrent operation tracking. Includes patterns for Hotwire/Turbo compatibility and state machine recommendations.
+
+## [2.7.0] - 2025-11-27
+
+### Changed
+
+- **`/codify` → `/compound`** - Renamed the documentation command to better reflect the compounding engineering philosophy. Each documented solution compounds your team's knowledge. The old `/codify` command still works but shows a deprecation notice and calls `/compound`.
+- **`codify-docs` → `compound-docs`** - Renamed the skill to match the new command name.
+
+### Updated
+
+- All documentation, philosophy sections, and references updated to use `/compound` and `compound-docs`
+
+## [2.6.2] - 2025-11-27
+
+### Improved
+
+- **`/plan` command** - Added AskUserQuestion tool for post-generation options and year note (2025) for accurate date awareness.
+- **Research agents** - Added year note (2025) to all 4 research agents (best-practices-researcher, framework-docs-researcher, git-history-analyzer, repo-research-analyst) for accurate date awareness when searching documentation.
+
+## [2.6.1] - 2025-11-26
+
+### Improved
+
+- **`/plan` command** - Replaced vague "keep asking questions" ending with clear post-generation options menu. Users now see 4 explicit choices via AskUserQuestion: Start `/work`, Run `/plan_review`, Simplify, or Rework.
+
+## [2.6.0] - 2024-11-26
+
+### Removed
+
+- **`feedback-codifier` agent** - Removed from workflow agents. Agent count reduced from 24 to 23.
+
 ## [2.5.0] - 2024-11-25
 
 ### Added
@@ -94,7 +136,7 @@ Major reorganization consolidating agents, commands, and skills from multiple so
 - `/prime` - Prime/setup command
 - `/create-agent-skill` - Create or edit Claude Code skills
 - `/heal-skill` - Fix skill documentation issues
-- `/workflows:codify` - Document solved problems for knowledge base
+- `/codify` - Document solved problems for knowledge base
 
 **New Skills (10)**
 - `andrew-kane-gem-writer` - Write Ruby gems following Andrew Kane's patterns
@@ -119,7 +161,7 @@ Major reorganization consolidating agents, commands, and skills from multiple so
 
 **Commands Restructured**
 - Workflow commands moved to `commands/workflows/` subdirectory
-- `/plan`, `/review`, `/work` now accessed as `/workflows:plan`, `/workflows:review`, `/workflows:work`
+- `/plan`, `/review`, `/work`, `/codify` accessible via short names (autocomplete) or full path
 
 ### Summary
 

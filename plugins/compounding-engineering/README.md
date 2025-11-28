@@ -6,7 +6,7 @@ AI-powered development tools that get smarter with every use. Make each unit of 
 
 | Component | Count |
 |-----------|-------|
-| Agents | 24 |
+| Agents | 23 |
 | Commands | 16 |
 | Skills | 11 |
 | MCP Servers | 2 |
@@ -47,13 +47,12 @@ Agents are organized into categories for easier discovery.
 | `design-iterator` | Iteratively refine UI through systematic design iterations |
 | `figma-design-sync` | Synchronize web implementations with Figma designs |
 
-### Workflow (6)
+### Workflow (5)
 
 | Agent | Description |
 |-------|-------------|
 | `bug-reproduction-validator` | Systematically reproduce and validate bug reports |
 | `every-style-editor` | Edit content to conform to Every's style guide |
-| `feedback-codifier` | Codify feedback patterns into reviewer agents |
 | `lint` | Run linting and code quality checks on Ruby and ERB files |
 | `pr-comment-resolver` | Address PR comments and implement fixes |
 | `spec-flow-analyzer` | Analyze user flows and identify gaps in specifications |
@@ -68,14 +67,14 @@ Agents are organized into categories for easier discovery.
 
 ### Workflow Commands
 
-Access via `/workflows:command`:
+Core workflow commands (use the short form for autocomplete):
 
 | Command | Description |
 |---------|-------------|
-| `/workflows:plan` | Create implementation plans |
-| `/workflows:review` | Run comprehensive code reviews |
-| `/workflows:work` | Execute work items systematically |
-| `/workflows:codify` | Document solved problems for knowledge base |
+| `/plan` | Create implementation plans |
+| `/review` | Run comprehensive code reviews |
+| `/work` | Execute work items systematically |
+| `/compound` | Document solved problems to compound team knowledge |
 
 ### Utility Commands
 
@@ -101,7 +100,7 @@ Access via `/workflows:command`:
 | Skill | Description |
 |-------|-------------|
 | `andrew-kane-gem-writer` | Write Ruby gems following Andrew Kane's patterns |
-| `codify-docs` | Capture solved problems as categorized documentation |
+| `compound-docs` | Capture solved problems as categorized documentation |
 | `create-agent-skills` | Expert guidance for creating Claude Code skills |
 | `dhh-ruby-style` | Write Ruby/Rails code in DHH's 37signals style |
 | `dspy-ruby` | Build type-safe LLM applications with DSPy.rb |
